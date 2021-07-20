@@ -1,0 +1,39 @@
+service: qonto2lexoffice
+frameworkVersion: "2"
+variablesResolutionMode: 20210326
+configValidationMode: error
+provider:
+  name: aws
+  runtime: python3.8
+  region: eu-central-1
+  lambdaHashingVersion: 20201221
+  iam:
+    role:
+      statements:
+        - Effect: "Allow"
+          Action:
+            - "ses:SendEmail"
+            - "ses:SendRawEmail"
+          Resource: "*"
+
+functions:
+  cronJob:
+    handler: handler.run
+    environment:
+      SUBJECT: "Your weekly transactions on Qonto"
+      RECIPIENT: ${ssm:/qonto2lexoffice-recipient}
+      SENDER: ${ssm:/qonto2lexoffice-sender}
+      REGION: "eu-central-1"
+      QONTO_API_URL: "https://thirdparty.qonto.com/v2/"
+      QONTO_API_KEY: ${ssm:/qonto-api-key}
+      QONTO_SLUG: ${ssm:/qonto-slug}
+      QONTO_IBAN: ${ssm:/qonto-iban}
+    events:
+      - schedule: cron(0 8 ? * MON *)
+
+plugins:
+  - serverless-python-requirements
+
+custom:
+  pythonRequirements:
+    dockerizePip: non-linux

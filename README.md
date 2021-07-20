@@ -1,6 +1,6 @@
 # qonto2lexoffice
 
-A simple serverless project containing an AWS lambda function that sends you a weekly email with a CSV of your Qonto transactions that is optimized for LexOffice.
+A simple serverless project containing an AWS lambda function that sends you a weekly email with a CSV of your Qonto transactions that is optimized for Lexoffice.
 
 Inspired by:
 https://dev.classmethod.jp/articles/query-qonto-api-and-email-with-lambda/
@@ -16,7 +16,7 @@ Configure a sender (e.g. *sender@example.com*) in SES and verify that e-mail add
 
 ### Setup secrets
 
-Five parameters are required in the AWS parameter storage [https://eu-central-1.console.aws.amazon.com/systems-manager/parameters/](AWS parameter storage) in _eu-central-1_
+Five parameters are required in the AWS parameter storage [AWS parameter storage](https://eu-central-1.console.aws.amazon.com/systems-manager/parameters/) in _eu-central-1_
 
 ```
 qonto2lexoffice-sender=<sender@example.com>
